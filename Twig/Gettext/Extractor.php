@@ -69,6 +69,7 @@ class Extractor
 
     public function extract()
     {
+        # Generate xgettext path
         $command = 'xgettext';
         $command .= ' '.join(' ', $this->parameters);
         $command .= ' '.join(' ', $this->templates);
