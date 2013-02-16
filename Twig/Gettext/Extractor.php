@@ -69,13 +69,18 @@ class Extractor
 
     public function extract()
     {
-        # Generate xgettext path
-        $command = 'xgettext';
+        # Generate xgettext path with params (XGETTEXT_PATH defined in twig-gettext-extractor file)
+        $command = XGETTEXT_PATH;
         $command .= ' '.join(' ', $this->parameters);
         $command .= ' '.join(' ', $this->templates);
-
+        
         $error = 0;
+
+        # Attention, if you have problems with function system() 
+        # You can try turn off safe_mode in php.ini and if it not help
+        # try to use full path to command (like: "/usr/bin/ls")
         $output = system($command, $error);
+
         if (0 !== $error) {
             throw new \RuntimeException(sprintf(
                 'Gettext command "%s" failed with error code %s and output: %s',

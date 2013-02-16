@@ -1,6 +1,5 @@
 #!/usr/bin/env php
 <?php
-
 /**
  * This file is part of the Twig Gettext utility.
  *
@@ -15,6 +14,13 @@
  *
  * @author Саша Стаменковић <umpirsky@gmail.com>
  */
+
+
+# Default value for path it's "xgettext".
+# If you have problems with it on Linux or OS X, you can try to 
+# use command [$ which xgettext] in terminal and copy full path to xgettext here.
+# For example for my OS X it's look like "/opt/local/bin/xgettext"
+define ("XGETTEXT_PATH", "/opt/local/bin/xgettext");
 
 if (file_exists($a = __DIR__.'/../../autoload.php')) {
     require_once $a;
@@ -54,5 +60,4 @@ foreach ($_SERVER['argv'] as $arg) {
         $extractor->addGettextParameter($arg);
     }
 }
-
 $extractor->extract();
