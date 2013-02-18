@@ -94,7 +94,7 @@ class Extractor
         if (0 !== $error) {
             throw new \RuntimeException(sprintf(
                 'Gettext command "%s" failed with error code %s and output: %s',
-                $command,
+                $this->command,
                 $error,
                 $output
             ));
