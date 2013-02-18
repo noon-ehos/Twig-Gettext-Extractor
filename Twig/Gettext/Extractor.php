@@ -33,6 +33,12 @@ class Extractor
     protected $templates;
 
     /**
+     * xgettext command like in terminal
+     * @var string
+     */
+    protected $command;
+
+    /**
      * Gettext parameters.
      *
      * @var string[]
@@ -57,6 +63,11 @@ class Extractor
         $this->templates[] = $this->environment->getCacheFilename($path);
     }
 
+    public function setGettextCommand($command = "xgettext")
+    {
+        $this->command = $command;
+    }
+
     public function addGettextParameter($parameter)
     {
         $this->parameters[] = $parameter;
@@ -70,16 +81,15 @@ class Extractor
     public function extract()
     {
         # Generate xgettext path with params (XGETTEXT_PATH defined in twig-gettext-extractor file)
-        $command = XGETTEXT_PATH;
-        $command .= ' '.join(' ', $this->parameters);
-        $command .= ' '.join(' ', $this->templates);
+        $this->command .= ' '.join(' ', $this->parameters);
+        $this->command .= ' '.join(' ', $this->templates);
         
         $error = 0;
 
         # Attention, if you have problems with function system() 
         # You can try turn off safe_mode in php.ini and if it not help
-        # try to use full path to command (like: "/usr/bin/ls")
-        $output = system($command, $error);
+        # try to use full path to xgettext command (like: "/usr/bin/ls")
+        $output = system($this->command, $error);
 
         if (0 !== $error) {
             throw new \RuntimeException(sprintf(
